@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,7 +13,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('admin/dashboard', 'AdminController@index')->name('dashboard');
+
+Route::group(['middleware' => 'locale'], function() {
+    Route::get('lang/{lang}', 'LangController@changeLanguage')->name('lang');
 });
