@@ -50,4 +50,12 @@ return [
     'add_category' => 'Add Category',
     'updated' => 'Update success!',
     'save' => 'Save',
+    'update_category' => 'Update Category',
+    'category_parent' => 'Category Parent',
+    'category_name' => 'Category Name',
+    'product_management' => 'Product Management',
+    'add_product' => 'Add Product',
+    'coppyright' => 'Copyright',
+    'all_rights_reserved' => 'All rights reserved.',
+    'version' => 'Version',
 ];

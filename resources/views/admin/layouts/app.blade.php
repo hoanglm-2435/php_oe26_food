@@ -19,7 +19,6 @@
 
     <link rel="stylesheet" href="{{ asset('bower_components/sweetalert/docs/assets/css/app.css') }}">
 
-    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -114,13 +113,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('categories.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-bookmark"></i>
                             <p>{{ trans('message.categories') }}</p>
                         </a>
                     </li>
                     <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('products.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-book"></i>
                             <p>{{ trans('message.products') }}</p>
                         </a>
@@ -138,10 +137,8 @@
         <!-- /.sidebar -->
     </aside>
 
-    <!-- Content Wrapper. Contains page content -->
     @yield('content');
-    <!-- /.content-wrapper -->
-    <!-- Control Sidebar -->
+
     <aside class="control-sidebar control-sidebar-dark">
         <!-- Control sidebar content goes here -->
     </aside>

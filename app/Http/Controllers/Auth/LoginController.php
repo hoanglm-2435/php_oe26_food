@@ -32,15 +32,15 @@ class LoginController extends Controller
 
     protected function redirectTo()
     {
-        if (auth()->user()->role_id == 1) {
-            return '/admin/dashboard';
+        if (auth()->user()->role_id == config('roles.admin')) {
+            return route('dashboard');
         }
         return '/home';
     }
 
     public function showLoginForm()
     {
-        if (Auth::check() && auth()->user()->role_id == 1) {
+        if (Auth::check() && auth()->user()->role_id == config('roles.admin')) {
             return view('admin.dashboard');
         }
         else {
@@ -53,7 +53,7 @@ class LoginController extends Controller
         $login = [
             'email' => $request->email,
             'password' => $request->password,
-            'role_id' => 1
+            'role_id' => config('roles.admin')
         ];
 
         if ($request->has('remember_me')) {
