@@ -2,28 +2,26 @@
 
 namespace App\Http\Middleware;
 
-use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class RedirectIfAuthenticated
+class Admin
 {
     /**
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
-     * @param  string|null  $guard
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
+    public function handle($request, Closure $next)
     {
-        if (Auth::guard($guard)->check()) {
+        if (Auth::check()) {
             if (Auth::user()->role_id == config('roles.admin')) {
-                return redirect()->route('dashboard');
+                return $next($request);
             }
         }
 
-        return $next($request);
+        return redirect()->route('login');
     }
 }

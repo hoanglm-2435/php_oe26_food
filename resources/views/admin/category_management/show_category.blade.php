@@ -5,12 +5,12 @@
         <div class="table-title">
             <div class="row">
                 <div class="col-sm-5">
-                    <h2>{{ trans('message.users') }}</h2>
+                    <h2>{{ trans('message.category_management') }}</h2>
                 </div>
                 <div class="col-sm-7">
-                    <a href="{{ route('users.create') }}" class="btn btn-primary">
+                    <a href="{{ route('categories.create') }}" class="btn btn-primary">
                         <i class="fas fa-plus-circle"></i>
-                        <span>{{ trans('message.add_user') }}</span>
+                        <span>{{ trans('message.add_category') }}</span>
                     </a>
                 </div>
             </div>
@@ -26,36 +26,37 @@
             <thead>
             <tr class="text-center">
                 <td>#</td>
-                <td>{{ trans('message.name') }}</td>
-                <td>{{ trans('message.email') }}</td>
-                <td>{{ trans('message.address') }}</td>
-                <td>{{ trans('message.phone') }}</td>
-                <td>{{ trans('message.role') }}</td>
+                <td>{{ trans('message.category_parent') }}</td>
+                <td>{{ trans('message.category_name') }}</td>
                 <td colspan="2">{{ trans('message.action') }}</td>
             </tr>
             </thead>
             <tbody>
-            @foreach ($users as $key => $user)
+            @foreach ($categories as $key => $cate)
                 <tr class="text-center">
                     <td>{{ $key = $key + 1 }}</td>
-                    <td>{{ $user->name }}</td>
-                    <td>{{ $user->email }}</td>
-                    <td>{{ $user->address }}</td>
-                    <td>{{ $user->phone }}</td>
-                    <td>{{ trans('message.' . $user->role->role) }}</td>
+                    <td>
+                        @if ($cate->parent)
+                            {{ $cate->parent->name }}
+                        @else
+                            {{ $cate->name }}
+                        @endif
+                    </td>
+                    <td>{{ $cate->name }}</td>
                     <td>
                         <div class="custom-control-inline">
-                            <a href="{{ route('users.edit', $user->id) }}"
+                            <a href="{{ route('categories.edit', $cate->id) }}"
                                 class="btn btn-primary">
                                 <i class="fas fa-user-edit"></i>
-                                    {{ trans('message.edit') }}
+                                {{ trans('message.edit') }}
                             </a>
-                            <form class="delete" action="{{ route('users.destroy', $user->id) }}" method="post">
+                            <form class="delete" action="{{ route('categories.destroy', $cate->id) }}" class="delete"
+                                method="post">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-danger" type="submit">
                                     <i class="fas fa-trash"></i>
-                                        {{ trans('message.delete') }}
+                                    {{ trans('message.delete') }}
                                 </button>
                             </form>
                         </div>
@@ -70,12 +71,12 @@
                     {{ trans('message.showing') }}
                     <b>{{ $key }}</b>
                     {{ trans('message.out_of') }}
-                    <b>{{ $users->count() }}</b>
+                    <b>{{ $categories->count() }}</b>
                     {{ trans('message.entries') }}
                 </h6>
             </div>
             <ul class="pagination">
-                {{ $users->render() }}
+                {{ $categories->render() }}
             </ul>
         </div>
     </div>

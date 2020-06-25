@@ -49,4 +49,12 @@ return [
     'add_category' => 'Thêm danh mục',
     'updated' => 'Sửa thành công!',
     'save' => 'Lưu',
+    'update_category' => 'Cập nhật danh mục',
+    'category_parent' => 'Danh mục cha',
+    'category_name' => 'Danh mục con',
+    'product_management' => 'Quản lý sản phẩm',
+    'add_product' => 'Thêm sản phẩm',
+    'coppyright' => 'Bản quyền',
+    'all_rights_reserved' => 'Đã đăng ký bản quyền.',
+    'vesion' => 'Phiên bản',
 ];

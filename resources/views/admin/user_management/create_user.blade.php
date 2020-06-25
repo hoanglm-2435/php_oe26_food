@@ -63,6 +63,7 @@
                                     </span>
                                     <input id="email"
                                            name="password"
+                                           type="password"
                                            placeholder="{{ trans('message.password') }}"
                                            class="form-control">
                                 </div>

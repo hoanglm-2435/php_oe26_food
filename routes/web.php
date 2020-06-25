@@ -15,10 +15,17 @@ use Illuminate\Support\Facades\Route;
 */
 Auth::routes();
 
-Route::get('admin/dashboard', 'AdminController@index')->name('dashboard');
-
 Route::group(['middleware' => 'locale'], function() {
     Route::get('lang/{lang}', 'LangController@changeLanguage')->name('lang');
 });
 
-Route::resource('users', 'UserController');
+//Admin Route
+Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
+    Route::get('dashboard', 'AdminController@index')->name('dashboard');
+
+    Route::resource('users', 'UserController');
+
+    Route::resource('categories', 'CategoryController');
+
+    Route::resource('products', 'ProductController');
+});
