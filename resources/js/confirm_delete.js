@@ -12,12 +12,10 @@ $('.delete').on('click', function(e){
                 swal('Poof! Your item file has been deleted!', {
                     icon: 'success',
                 });
-                $('.delete').submit();
-                location.reload();
+                $(this).submit();
             } else {
                 swal('Your item file is safe!');
             }
         });
-
 });
 
