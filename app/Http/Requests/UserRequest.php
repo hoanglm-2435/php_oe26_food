@@ -28,7 +28,6 @@ class UserRequest extends FormRequest
             'email' => 'required|email|unique:users',
             'phone' => 'required|numeric',
             'address' => 'required',
-            'role_id' => 'required'
         ];
     }
 }
