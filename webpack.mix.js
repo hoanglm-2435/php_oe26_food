@@ -11,6 +11,9 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .js('resources/js/confirm_delete.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+mix.js('resources/js/confirm_delete.js', 'public/js')
+    .js('resources/js/ajax.js', 'public/js')
+    .js('resources/js/filter_validate.js', 'public/js')
+    .js('resources/js/order_status.js', 'public/js')
+    .js('resources/js/suggest_status.js', 'public/js')
+    .js('resources/js/rating.js', 'public/js');

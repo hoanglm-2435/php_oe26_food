@@ -14,11 +14,9 @@
     <link rel="stylesheet" href="{{ asset('bower_components/admin-lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('bower_components/admin-lte/dist/css/adminlte.min.css') }}">
-
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-
     <link rel="stylesheet" href="{{ asset('bower_components/sweetalert/docs/assets/css/app.css') }}">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -31,7 +29,7 @@
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="{{ route('dashboard') }}" class="nav-link">{{ trans('message.home') }}</a>
+                <a href="{{ route('homepage') }}" class="nav-link">{{ trans('message.home') }}</a>
             </li>
         </ul>
 
@@ -107,7 +105,7 @@
                         </a>
                     </li>
                     <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('orders.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-edit"></i>
                             <p>{{ trans('message.orders') }}</p>
                         </a>
@@ -125,7 +123,7 @@
                         </a>
                     </li>
                     <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('suggests.index') }}" class="nav-link">
                             <i class="nav-icon far fa-plus-square"></i>
                             <p>{{ trans('message.suggests') }}</p>
                         </a>
@@ -159,9 +157,9 @@
 <script src="{{ asset('bower_components/admin-lte/plugins/daterangepicker/daterangepicker.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('bower_components/admin-lte/dist/js/adminlte.js') }}"></script>
-
 <script src="{{ mix('js/confirm_delete.js') }}"></script>
-
 <script src="{{ asset('bower_components/sweetalert/docs/assets/sweetalert/sweetalert.min.js') }}"></script>
+<script src="{{ mix('js/order_status.js') }}"></script>
+<script src="{{ mix('js/suggest_status.js') }}"></script>
 </body>
 </html>

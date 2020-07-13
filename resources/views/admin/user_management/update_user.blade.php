@@ -35,14 +35,7 @@
                                     <span class="input-group-addon">
                                         <i class="glyphicon glyphicon-user"></i>
                                     </span>
-                                    <input id="name"
-                                           name="name"
-                                           placeholder="{{ trans('message.name') }}"
-                                           class="form-control"
-                                           required="true"
-                                           value="{{ $user->name }}"
-                                           disabled
-                                           type="text">
+                                    <h5>{{ $user->name }}</h5>
                                 </div>
                             </div>
                         </div>
@@ -53,32 +46,7 @@
                                     <span class="input-group-addon">
                                         <i class="glyphicon glyphicon-home"></i>
                                     </span>
-                                    <input id="email"
-                                           name="email"
-                                           placeholder="{{ trans('message.email') }}"
-                                           class="form-control"
-                                           required="true"
-                                           value="{{ $user->email }}"
-                                           disabled
-                                           type="email">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">{{ trans('message.password') }}</label>
-                            <div class="col-md-8 inputGroupContainer">
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <i class="glyphicon glyphicon-home"></i>
-                                    </span>
-                                    <input id="email"
-                                           name="password"
-                                           placeholder="{{ trans('message.password') }}"
-                                           class="form-control"
-                                           required="true"
-                                           value="{{ $user->password }}"
-                                           disabled
-                                           type="password">
+                                    <h5>{{ $user->email }}</h5>
                                 </div>
                             </div>
                         </div>
@@ -89,14 +57,7 @@
                                     <span class="input-group-addon">
                                         <i class="glyphicon glyphicon-home"></i>
                                     </span>
-                                    <input id="address"
-                                           name="address"
-                                           placeholder="{{ trans('message.address') }}"
-                                           class="form-control"
-                                           required="true"
-                                           value="{{ $user->address }}"
-                                           disabled
-                                           type="text">
+                                    <h5>{{ $user->address }}</h5>
                                 </div>
                             </div>
                         </div>
@@ -107,14 +68,7 @@
                                     <span class="input-group-addon">
                                         <i class="glyphicon glyphicon-home"></i>
                                     </span>
-                                    <input id="phone"
-                                           name="phone"
-                                           placeholder="{{ trans('message.phone') }}"
-                                           class="form-control"
-                                           required="true"
-                                           value="{{ $user->phone }}"
-                                           disabled
-                                           type="text">
+                                    <h5>{{ $user->phone }}</h5>
                                 </div>
                             </div>
                         </div>
@@ -126,8 +80,8 @@
                                     @foreach (config('roles') as $key => $role)
                                         <option value="{{ $role }}"
                                                 @if ($role == $user->role_id)
-                                                    selected
-                                                @endif
+                                                selected
+                                            @endif
                                         >{{ trans('message.' . $key) }}</option>
                                     @endforeach
 
