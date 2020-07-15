@@ -8,10 +8,8 @@
     <meta name="robots" content="noindex, follow"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset(config('filepath.logo-web')) }}">
 
-    <!-- all css here -->
     <link rel="stylesheet" href="{{ asset('bower_components/style-template/css/animate.css') }}">
     <link rel="stylesheet" href="{{ asset('bower_components/style-template/css/chosen.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bower_components/style-template/css/jquery-ui.css') }}">
@@ -32,7 +30,6 @@
     <script src="{{ asset('bower_components/style-template/js/modernizr-2.8.3.min.js') }}"></script>
 </head>
 <body>
-<!-- header start -->
 <header class="header-area">
     <div class="header-top black-bg">
         <div class="container">
@@ -145,18 +142,18 @@
                                     <span class="digit">{{ trans('client.cart') }}</span>
                                     <span class="cart-digit-bold total-price">
                                         @if (session('cart'))
-                                            &#36;{{ session('total_price') }}
+                                            &#36;{{ session('totalPrice') }}
                                         @else
                                             &#36;{{ config('numbers.zero') }}
                                         @endif
                                     </span>
                                 </div>
                             </a>
-                            @if(session('cart'))
+                            @if (session('cart'))
                                 <div class="shopping-cart-content">
                                     <ul>
-                                        <?php $limit = 0 ?>
-                                        @foreach(session('cart') as $id => $details)
+                                        @php $limit = 0 @endphp
+                                        @foreach (session('cart') as $id => $details)
                                             @if ($limit < 3)
                                                 <li class="single-shopping-cart">
                                                     <div class="shopping-cart-img">
@@ -188,12 +185,12 @@
                                                     </div>
                                                 </li>
                                             @endif
-                                            <?php $limit++ ?>
+                                            @php $limit++ @endphp
                                         @endforeach
                                     </ul>
                                     <div class="shopping-cart-total">
                                         <h4>{{ trans('client.total_price') }} :
-                                            <span class="shop-total total-price">&#36;{{ session('total_price') }}
+                                            <span class="shop-total total-price">&#36;{{ session('totalPrice') }}
                                             </span>
                                         </h4>
                                     </div>
@@ -302,7 +299,6 @@
     </div>
 </div>
 
-<!-- all js here -->
 <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
 <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('bower_components/style-template/js/popper.js') }}"></script>
@@ -316,6 +312,7 @@
 <script src="{{ asset('bower_components/toastr/toastr.min.js') }}"></script>
 <script src="{{ asset('bower_components/jquery.rateit/scripts/jquery.rateit.min.js') }}"></script>
 <script src="{{ mix('js/confirm_delete.js') }}"></script>
+<script src="{{ mix('js/ajax.js') }}"></script>
 <script>
     function messageSuccess($message) {
         toastr.success($message, 'Notification', {timeOut: 5000});

@@ -28,5 +28,7 @@ return [
     'asc' => 'asc',
     'price_asc' => 'price_asc',
     'price_desc' => 'price_desc',
-    'rating_desc' => 'rating_desc'
+    'rating_desc' => 'rating_desc',
+    'best_rating' => 4,
+    'quantity_min' => 1
 ];
