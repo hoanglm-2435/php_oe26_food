@@ -13,3 +13,4 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/confirm_delete.js', 'public/js')
     .js('resources/js/ajax.js', 'public/js')
+    .js('resources/js/filter_validate.js', 'public/js')
