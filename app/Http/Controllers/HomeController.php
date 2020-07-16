@@ -19,7 +19,7 @@ class HomeController extends Controller
             ->sortBy('DESC')
             ->take(config('paginates.pagination'));
         $ratingProducts = Rating::select('product_id',
-            DB::raw('AVG(rating) as rating_avg'))
+            DB::raw('AVG(rating > ' . config('attribute_product.best_rating') . ') as rating_avg'))
             ->groupBy('product_id')
             ->orderBy('rating_avg', 'DESC')
             ->get();
