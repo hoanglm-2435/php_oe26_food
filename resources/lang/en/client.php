@@ -115,4 +115,5 @@ return [
     'code_order' => 'Code Order',
     'order_invoiced_date' => 'Order Invoiced Date',
     'rating_desc' => 'Rating Descending',
+    'product_already_favourites_list' => 'This product is already in the favorites list!'
 ];
