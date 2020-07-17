@@ -313,6 +313,7 @@
 <script src="{{ asset('bower_components/jquery.rateit/scripts/jquery.rateit.min.js') }}"></script>
 <script src="{{ mix('js/confirm_delete.js') }}"></script>
 <script src="{{ mix('js/ajax.js') }}"></script>
+<script src="{{ mix('js/filter_validate.js') }}"></script>
 <script>
     function messageSuccess($message) {
         toastr.success($message, 'Notification', {timeOut: 5000});
