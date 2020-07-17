@@ -77,10 +77,10 @@ $(document).ready(function() {
 $('.payment').on('click', function() {
     var note =  $('.note').val();
     var totalPrice = $('.grand-total').text();
-    totalPrice = totalPrice.replace('$','');
+    totalPrice = totalPrice.replace('$', '');
     var paymentType = $('input[name=payment_type]:checked').val();
     $.ajax({
-        url : 'cart',
+        url : 'checkout',
         data : {
             note : note,
             total_price : totalPrice,
