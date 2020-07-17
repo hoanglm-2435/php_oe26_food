@@ -36,7 +36,7 @@ class CheckoutController extends Controller
                     'order_id' => $orderId,
                     'product_id' => $cart['id'],
                     'quantity' => $cart['quantity'],
-                    'total_price' => $cart['price'],
+                    'total_price' => $cart['quantity'] * $cart['price'],
                 ];
                 $product = Product::find($cart['id']);
                 $product->update([

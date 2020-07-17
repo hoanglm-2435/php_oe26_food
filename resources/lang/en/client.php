@@ -108,12 +108,13 @@ return [
     'edit_my_acc' => 'Edit your account information',
     'change_your_password' => 'Change your password',
     'old_pass' => 'Old Password',
-    'new_pass' => 'new_pass',
+    'new_pass' => 'new pass',
     'confirm_pass' => 'Confirm password',
     'modify_favourites' => 'Modify Favourites',
     'back' => 'Back',
     'code_order' => 'Code Order',
     'order_invoiced_date' => 'Order Invoiced Date',
     'rating_desc' => 'Rating Descending',
-    'product_already_favourites_list' => 'This product is already in the favorites list!'
+    'product_already_favourites_list' => 'This product is already in the favorites list!',
+    'order_details' => 'Order Details',
 ];

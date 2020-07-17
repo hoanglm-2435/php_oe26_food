@@ -16,6 +16,28 @@ class OrderController extends Controller
         return view('admin.order_management.show_order', compact('orders'));
     }
 
+    public function showDetails($id)
+    {
+        $orderItem = OrderItem::where('order_id', $id)->get();
+        $orderDetails = [];
+        $grandTotal = config('numbers.zero');
+
+        foreach ($orderItem as $id => $item) {
+            $orderDetails[] = [
+                'productName' => $item->product->name,
+                'productQuantity' => $item->quantity,
+                'productPrice' => $item->product->price_sale,
+                'totalPrice' => $item->total_price,
+            ];
+            $grandTotal += $item->total_price;
+        }
+
+        return response()->json([
+            'orderDetails' => $orderDetails,
+            'grandTotal' => $grandTotal,
+        ]);
+    }
+
     public function update(Request $request, $id)
     {
         $order = Order::findOrFail($id);
