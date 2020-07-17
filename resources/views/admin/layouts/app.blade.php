@@ -89,7 +89,7 @@
                         </a>
                     </li>
                     <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('orders.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-edit"></i>
                             <p>{{ trans('message.orders') }}</p>
                         </a>
@@ -133,5 +133,6 @@
 <script src="{{ mix('js/confirm_delete.js') }}"></script>
 <script src="{{ asset('bower_components/sweetalert/docs/assets/sweetalert/sweetalert.min.js') }}"></script>
 <script src="{{ mix('js/suggest_status.js') }}"></script>
+<script src="{{ mix('js/order_status.js') }}"></script>
 </body>
 </html>
