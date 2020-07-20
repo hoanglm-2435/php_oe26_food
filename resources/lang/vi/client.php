@@ -115,5 +115,6 @@ return [
     'code_order' => 'Mã đơn hàng',
     'order_invoiced_date' => 'Ngày tạo đơn hàng',
     'rating_desc' => 'Đánh giá giảm dần',
-    'product_already_favourites_list' => 'Sản phẩm đã tồn tại trong danh sách ưa thích của bạn!'
+    'product_already_favourites_list' => 'Sản phẩm đã tồn tại trong danh sách ưa thích của bạn!',
+    'order_details' => 'Thông tin đơn hàng',
 ];

@@ -315,6 +315,8 @@
 <script src="{{ mix('js/ajax.js') }}"></script>
 <script src="{{ mix('js/filter_validate.js') }}"></script>
 <script src="{{ mix('js/rating.js') }}"></script>
+<script src="{{ mix('js/order_status.js') }}"></script>
+<script src="{{ mix('js/order_infor.js') }}"></script>
 <script>
     function messageSuccess($message) {
         toastr.success($message, 'Notification', {timeOut: 5000});

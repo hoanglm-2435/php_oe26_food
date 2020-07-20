@@ -77,3 +77,6 @@ Route::put('cancel-order/{id}', 'OrderController@cancelOrder');
 
 //Rating
 Route::resource('rating', 'RatingController');
+
+//Show order details
+Route::get('show-details/orders/{id}', 'OrderController@showDetails')->name('show_details');
