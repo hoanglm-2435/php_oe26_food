@@ -36,16 +36,24 @@ class RegisterController extends Controller
 
     public function register(UserRequest $request)
     {
-        User::create([
+        $data = [
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'address' => $request->address,
             'phone' => $request->phone,
             'role_id' => config('roles.customer'),
-        ]);
+        ];
 
-        return redirect()->route('login')->with('success', trans('message.register_success'));
+        if ($request->password == $request->password_confirmation) {
+            User::create($data);
+
+            return redirect()->route('login')
+                ->with('success', trans('message.register_success'));
+        } else {
+            return redirect()->back()
+                ->with('error', trans('message.register_failed'));
+        }
     }
 
     public function showRegistrationForm()

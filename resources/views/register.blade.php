@@ -4,15 +4,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>{{ trans('message.register') }}</title>
-    <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('bower_components/admin-lte/plugins/fontawesome-free/css/all.min.css') }}">
-    <!-- icheck bootstrap -->
-    <link rel="stylesheet"
-          href="{{ asset('bower_components/admin-lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
-    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset('bower_components/admin-lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bower_components/admin-lte/dist/css/adminlte.min.css') }}">
 </head>
 <body class="hold-transition login-page">
@@ -20,18 +15,15 @@
     <div class="login-logo">
         <b>{{ trans('message.register') }}</b>
     </div>
-    <!-- /.login-logo -->
     <div class="card">
         <div class="card-body login-card-body">
-
             @if (count($errors) >0)
                 <ul>
-                    @foreach($errors->all() as $error)
+                    @foreach ($errors->all() as $error)
                         <li class="text-danger"> {{ $error }}</li>
                     @endforeach
                 </ul>
             @endif
-
             <form action="{{ route('register') }}" method="post">
                 {{ csrf_field() }}
                 <div class="input-group mb-3">
@@ -85,24 +77,20 @@
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <button type="submit" class="btn btn-primary btn-block">{{ trans('message.register') }}</button>
+                    <button id="register" type="submit" class="btn btn-primary btn-block">
+                        {{ trans('message.register') }}
+                    </button>
                 </div>
             </form>
             <p class="mb-1 text-center">
-                <a href="{{ route('login') }}">{{ trans('message.return_login') }}</a>
+                <a id="return-login" href="{{ route('login') }}">{{ trans('message.return_login') }}</a>
             </p>
         </div>
-        <!-- /.login-card-body -->
     </div>
 </div>
-<!-- /.login-box -->
 
-<!-- jQuery -->
 <script src="{{ asset('public/bower_components/admin-lte/plugins/jquery/jquery.min.js') }}"></script>
-<!-- Bootstrap 4 -->
 <script src="{{ asset('public/bower_components/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<!-- AdminLTE App -->
 <script src="{{ asset('public/bower_components/admin-lte/dist/js/adminlte.min.js') }}"></script>
-
 </body>
 </html>
