@@ -4,6 +4,8 @@ namespace App\Repositories;
 
 interface RepositoryInterface
 {
+    public function getAll();
+
     public function showList($field, $type, $page);
 
     public function create($data = []);

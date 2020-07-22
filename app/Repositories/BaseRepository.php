@@ -21,6 +21,11 @@ abstract class BaseRepository implements RepositoryInterface
         $this->model = app()->make($this->getModel());
     }
 
+    public function getAll()
+    {
+        return $this->model->all();
+    }
+
     public function showList($field, $type, $page)
     {
         return $this->model->orderBy($field, $type)
