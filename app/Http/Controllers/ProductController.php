@@ -3,57 +3,63 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
-use App\Models\Category;
-use App\Models\Image;
-use App\Models\Product;
-use App\Models\Size;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
+use App\Repositories\Category\CategoryRepositoryInterface;
+use App\Repositories\Image\ImageRepositoryInterface;
+use App\Repositories\Product\ProductRepositoryInterface;
+use App\Repositories\Size\SizeRepositoryInterface;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    protected $productRepo;
+    protected $imageRepo;
+    protected $categoryRepo;
+    protected $sizeRepo;
+
+    public function __construct(
+        ProductRepositoryInterface $productRepo,
+        ImageRepositoryInterface $imageRepo,
+        CategoryRepositoryInterface $categoryRepo,
+        SizeRepositoryInterface $sizeRepo
+    )
+    {
+        $this->productRepo = $productRepo;
+        $this->imageRepo = $imageRepo;
+        $this->categoryRepo = $categoryRepo;
+        $this->sizeRepo = $sizeRepo;
+    }
+
     public function index()
     {
-        $products = Product::paginate(config('paginates.pagination'));
+        $products = $this->productRepo->showList(
+            'created_at',
+            'DESC',
+            config('paginates.pagination')
+        );
 
         return view('admin.product_management.show_product', compact('products'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        $categories = Category::all();
-        $sizes = Size::all();
+        $categories = $this->categoryRepo->getAll();
+        $sizes = $this->sizeRepo->getAll();
 
         return view('admin.product_management.create_product', compact('categories', 'sizes'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(ProductRequest $request)
     {
-        $product = Product::create($request->all());
+        $data = $request->all();
+        $product = $this->productRepo->create($data);
+
         if ($request->hasFile('image_path')) {
             foreach ($request->file('image_path') as $file) {
                 $filename = $file->getClientOriginalName();
-                $image = new Image();
-                $image->product_id = $product->id;
-                $image->image_path = $filename;
-                $image->save();
+                $image = [
+                    'product_id' => $product->id,
+                    'image_path' => $filename
+                ];
+                $this->imageRepo->create($image);
                 $file->move(config('filepath.img_product_path'), $filename);
             }
         }
@@ -64,77 +70,47 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', trans('message.created'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        $product = Product::findOrFail($id);
-        $categories = Category::all();
-        $sizes = Size::all();
+        $product = $this->productRepo->getById($id);
+        $categories = $this->categoryRepo->getAll();
+        $sizes = $this->sizeRepo->getAll();
 
         return view('admin.product_management.update_product', compact('product', 'categories', 'sizes'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(ProductRequest $request, $id)
     {
-        $product = Product::findOrFail($id);
+        $product = $this->productRepo->getById($id);
+        $data = $request->all();
 
         if ($request->hasFile('image_path')) {
-            foreach ($request->file('image_path') as $file)
-            {
+            foreach ($product->images as $oldImage) {
+                $this->imageRepo->delete($oldImage->id);
+            }
+            foreach ($request->file('image_path') as $file) {
                 $filename = $file->getClientOriginalName();
                 $path = public_path(config('filepath.img_product_path') . $filename);
+
                 if (file_exists($path)) {
                     unlink($path);
                 }
-                foreach ($product->images as $oldImage)
-                {
-                    $oldImage->delete();
-                }
-                $image = new Image();
-                $image->product_id = $product->id;
-                $image->image_path = $filename;
-                $image->save();
+                $image = [
+                    'product_id' => $product->id,
+                    'image_path' => $filename
+                ];
+                $this->imageRepo->create($image);
                 $file->move(config('filepath.img_product_path'), $filename);
             }
         }
-        $product->update($request->all());
+        $this->productRepo->update($id, $data);
 
         return redirect()->route('products.index')->with('success', trans('message.updated'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        $product = Product::findOrFail($id);
-        $product->delete();
+        $this->productRepo->delete($id);
 
         return redirect()->route('products.index')->with('success', trans('message.deleted'));
     }
