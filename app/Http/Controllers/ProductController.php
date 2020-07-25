@@ -20,8 +20,7 @@ class ProductController extends Controller
         ImageRepositoryInterface $imageRepo,
         CategoryRepositoryInterface $categoryRepo,
         SizeRepositoryInterface $sizeRepo
-    )
-    {
+    ) {
         $this->productRepo = $productRepo;
         $this->imageRepo = $imageRepo;
         $this->categoryRepo = $categoryRepo;
