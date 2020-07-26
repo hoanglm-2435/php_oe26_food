@@ -2,7 +2,6 @@
 
 namespace App\Repositories;
 
-use App\Http\Requests\UserRequest;
 use App\Repositories\RepositoryInterface;
 
 abstract class BaseRepository implements RepositoryInterface
@@ -66,5 +65,15 @@ abstract class BaseRepository implements RepositoryInterface
         }
 
         return false;
+    }
+
+    public function getWhereEqual($column, $condition)
+    {
+        return $this->model->where($column, $condition)->get();
+    }
+
+    public function insert($data = [])
+    {
+        return $this->model->insert($data);
     }
 }

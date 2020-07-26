@@ -15,4 +15,8 @@ interface RepositoryInterface
     public function update($id, $data = []);
 
     public function delete($id);
+
+    public function getWhereEqual($column, $condition);
+
+    public function insert($data = []);
 }

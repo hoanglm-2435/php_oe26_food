@@ -22,14 +22,12 @@ class ProfileController extends Controller
 
     public function update(Request $request, $id)
     {
-        $data = $request->all();
         $user = $this->userRepo->getById($id);
-        $this->userRepo->update($id, $data);
+        $this->userRepo->update($id, $request->all());
 
         if (Hash::check($request->oldPassword, $user->password)
             && $request->newPassword == $request->confirmPassword) {
-            $data['password'] = Hash::make($request->newPassword);
-            $this->userRepo->update($id, $data);
+            $this->userRepo->update($id, ['password' => Hash::make($request->newPassword)]);
         }
 
         return redirect()->back()->with('result', trans('message.updated'));

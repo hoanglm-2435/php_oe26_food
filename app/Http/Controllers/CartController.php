@@ -2,24 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Order;
-use App\Models\OrderItem;
-use App\Models\Product;
+use App\Repositories\Product\ProductRepositoryInterface;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
+    protected $productRepo;
+
+    public function __construct(ProductRepositoryInterface $productRepo)
+    {
+        $this->productRepo = $productRepo;
+    }
+
     public function index()
     {
         $products = session('cart');
 
         return view('client.cart-page', compact('products'));
-    }
-
-    public function store(Request $request)
-    {
-        //
     }
 
     public function update(Request $request, $id)
@@ -68,7 +67,7 @@ class CartController extends Controller
     public function addCart($id, Request $request)
     {
         if ($request->ajax()) {
-            $product = Product::findOrFail($id);
+            $product = $this->productRepo->getById($id);
             $cart = session()->get('cart');
             if (!$cart) {
                 $cart = [
