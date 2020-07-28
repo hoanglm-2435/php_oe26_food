@@ -2,23 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Order;
-use App\Models\OrderItem;
+use App\Repositories\Order\OrderRepositoryInterface;
+use App\Repositories\OrderItem\OrderItemRepositoryInterface;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+    protected $orderRepo;
+    protected $orderItemRepo;
+
+    public function __construct(
+        OrderRepositoryInterface $orderRepo,
+        OrderItemRepositoryInterface $orderItemRepo
+    ) {
+        $this->orderRepo = $orderRepo;
+        $this->orderItemRepo = $orderItemRepo;
+    }
+
     public function index()
     {
-        $orders = Order::orderBy('created_at', 'DESC')
-            ->paginate(config('paginates.pagination'));
+        $orders = $this->orderRepo->showList(
+            'created_at',
+            'DESC',
+            config('paginates.pagination')
+        );
 
         return view('admin.order_management.show_order', compact('orders'));
     }
 
     public function showDetails($id)
     {
-        $orderItem = OrderItem::where('order_id', $id)->get();
+        $orderItem = $this->orderItemRepo->getWhereEqual('order_id', $id);
         $orderDetails = [];
         $grandTotal = config('numbers.zero');
 
@@ -40,15 +54,15 @@ class OrderController extends Controller
 
     public function update(Request $request, $id)
     {
-        $order = Order::findOrFail($id);
+        $order = $this->orderRepo->getById($id);
 
-        if ($request->status) {
+        if ($request->all()) {
             if ($order->status == config('status.pending')) {
-                $order->update(['status' => config('status.approved')]);
+                $this->orderRepo->update($id, ['status' => config('status.approved')]);
 
                 return true;
             } elseif ($order->status == config('status.approved')) {
-                $order->update(['status' => config('status.pending')]);
+                $this->orderRepo->update($id, ['status' => config('status.pending')]);
 
                 return true;
             }
@@ -59,7 +73,7 @@ class OrderController extends Controller
 
     public function destroy($id)
     {
-        $order = Order::findOrFail($id);
+        $order = $this->orderRepo->getById($id);
         $order->delete();
 
         return redirect()->route('orders.index')->with('success', trans('message.deleted'));
@@ -67,20 +81,18 @@ class OrderController extends Controller
 
     public function historyOrder()
     {
-        $orders = Order::where('user_id', auth()->user()->id)
-            ->orderBy('created_at', 'DESC')
-            ->paginate(config('paginates.pagination'));
+        $orders = $this->orderRepo->getHistoryOrder(auth()->user()->id);
 
         return view('client.history-order', compact('orders'));
     }
 
     public function cancelOrder(Request $request, $id)
     {
-        $orderUser = Order::findOrFail($id);
+        $orderUser = $this->orderRepo->getById($id);
 
         if ($request->status) {
             if ($orderUser->status == config('status.pending')) {
-                $orderUser->update(['status' => config('status.canceled')]);
+                $this->orderRepo->update($id, ['status' => config('status.canceled')]);
 
                 return true;
             }

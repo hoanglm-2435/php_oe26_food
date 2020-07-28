@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
+use App\Repositories\Product\ProductRepositoryInterface;
 use Illuminate\Http\Request;
 
 class FavouriteController extends Controller
 {
+    protected $productRepo;
+
+    public function __construct(ProductRepositoryInterface $productRepo)
+    {
+        $this->productRepo = $productRepo;
+    }
+
     public function index()
     {
         $products = session('favourites');
@@ -17,7 +24,7 @@ class FavouriteController extends Controller
     public function addToFavourites($id, Request $request)
     {
         if ($request->ajax()) {
-            $product = Product::findOrFail($id);
+            $product = $this->productRepo->getById($id);
             $favouriteList = session()->get('favourites');
 
             if (!$favouriteList) {
