@@ -8,6 +8,8 @@ use App\Repositories\Image\ImageRepository;
 use App\Repositories\Image\ImageRepositoryInterface;
 use App\Repositories\Product\ProductRepository;
 use App\Repositories\Product\ProductRepositoryInterface;
+use App\Repositories\Rating\RatingRepository;
+use App\Repositories\Rating\RatingRepositoryInterface;
 use App\Repositories\Size\SizeRepository;
 use App\Repositories\Size\SizeRepositoryInterface;
 use App\Repositories\User\UserRepositoryInterface;
@@ -23,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(ImageRepositoryInterface::class, ImageRepository::class);
         $this->app->singleton(CategoryRepositoryInterface::class, CategoryRepository::class);
         $this->app->singleton(SizeRepositoryInterface::class, SizeRepository::class);
+        $this->app->singleton(RatingRepositoryInterface::class, RatingRepository::class);
     }
 
     public function boot()

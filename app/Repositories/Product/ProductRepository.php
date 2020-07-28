@@ -11,4 +11,19 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     {
         return Product::class;
     }
+
+    public function getProductByAttr($filter, $attr)
+    {
+        return $this->model->where($filter, $attr)
+            ->paginate(config('paginates.pagination_shop'));
+    }
+
+    public function showProductByRatingFilter($ids = [])
+    {
+        $product_id = implode(',', $ids);
+
+        return $this->model->whereIn('id', $ids)
+            ->orderByRaw("FIELD(id, $product_id)")
+            ->paginate(config('paginates.pagination_shop'));
+    }
 }

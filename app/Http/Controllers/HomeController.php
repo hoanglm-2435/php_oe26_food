@@ -2,39 +2,51 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
-use App\Models\Rating;
-use Illuminate\Support\Facades\DB;
+use App\Repositories\Rating\RatingRepositoryInterface;
+use App\Repositories\Product\ProductRepositoryInterface;
 
 class HomeController extends Controller
 {
+    protected $productRepo;
+    protected $ratingRepo;
+
+    public function __construct(
+        ProductRepositoryInterface $productRepo,
+        RatingRepositoryInterface $ratingRepo
+    ) {
+        $this->productRepo = $productRepo;
+        $this->ratingRepo = $ratingRepo;
+    }
+
     public function index()
     {
-        $products = Product::orderBy('created_at', 'DESC')
-            ->take(config('paginates.pagination'))->get();
+        $products = $this->productRepo->showList(
+            'created_at',
+            'DESC',
+            config('paginates.pagination')
+        );
         $food = $products->where('category_id', config('attribute_product.food.id'))
             ->sortBy('DESC')
             ->take(config('paginates.pagination'));
         $drink = $products->where('category_id', config('attribute_product.drink.id'))
             ->sortBy('DESC')
             ->take(config('paginates.pagination'));
-        $ratingProducts = Rating::select('product_id',
-            DB::raw('AVG(rating > ' . config('attribute_product.best_rating') . ') as rating_avg'))
-            ->groupBy('product_id')
-            ->orderBy('rating_avg', 'DESC')
-            ->get();
+        $ratingProducts = $this->ratingRepo->getProductBestRating();
         $ids = [];
 
-        foreach ($ratingProducts as $rating)
-        {
+        foreach ($ratingProducts as $rating) {
             $ids[] = $rating->product_id;
         }
-
         $product_id = implode(',', $ids);
         $bestProducts = $products->whereIn('id', $ids)
             ->sortBy("FIELD(id, $product_id)")
             ->take(config('paginates.pagination_shop'));
 
-        return view('client.homepage', compact('products', 'food', 'drink', 'bestProducts'));
+        return view('client.homepage', compact(
+            'products',
+            'food',
+            'drink',
+            'bestProducts'
+        ));
     }
 }

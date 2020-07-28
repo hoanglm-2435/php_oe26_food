@@ -2,18 +2,38 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use App\Models\Product;
-use App\Models\Rating;
-use App\Models\Size;
+use App\Repositories\Category\CategoryRepositoryInterface;
+use App\Repositories\Product\ProductRepositoryInterface;
+use App\Repositories\Rating\RatingRepositoryInterface;
+use App\Repositories\Size\SizeRepositoryInterface;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class ShoppingController extends Controller
 {
+    protected $productRepo;
+    protected $ratingRepo;
+    protected $categoryRepo;
+    protected $sizeRepo;
+
+    public function __construct(
+        ProductRepositoryInterface $productRepo,
+        RatingRepositoryInterface $ratingRepo,
+        CategoryRepositoryInterface $categoryRepo,
+        SizeRepositoryInterface $sizeRepo
+    ) {
+        $this->productRepo = $productRepo;
+        $this->ratingRepo = $ratingRepo;
+        $this->categoryRepo = $categoryRepo;
+        $this->sizeRepo = $sizeRepo;
+    }
+
     public function index(Request $request)
     {
-        $products = Product::paginate(config('paginates.pagination_shop'));
+        $products = $this->productRepo->showList(
+            'created_at',
+            'DESC',
+            config('paginates.pagination_shop')
+        );
 
         if ($request->sortBy) {
             $sortBy = $request->sortBy;
@@ -21,39 +41,43 @@ class ShoppingController extends Controller
             switch ($sortBy)
             {
                 case config('attribute_product.desc'):
-                    $products = Product::orderBy('created_at', 'DESC')
-                        ->paginate(config('paginates.pagination_shop'));
+                    $products = $this->productRepo->showList(
+                        'created_at',
+                        'DESC',
+                        config('paginates.pagination_shop')
+                    );
                     break;
                 case config('attribute_product.asc'):
-                    $products = Product::orderBy('created_at', 'ASC')
-                        ->paginate(config('paginates.pagination_shop'));
+                    $products = $this->productRepo->showList(
+                        'created_at',
+                        'ASC',
+                        config('paginates.pagination_shop')
+                    );
                     break;
                 case config('attribute_product.price_asc'):
-                    $products = Product::orderBy('price', 'ASC')
-                        ->paginate(config('paginates.pagination_shop'));
+                    $products = $this->productRepo->showList(
+                        'price_sale',
+                        'ASC',
+                        config('paginates.pagination_shop')
+                    );
                     break;
                 case config('attribute_product.price_desc'):
-                    $products = Product::orderBy('price', 'DESC')
-                        ->paginate(config('paginates.pagination_shop'));
+                    $products = $this->productRepo->showList(
+                        'price_sale',
+                        'DESC',
+                        config('paginates.pagination_shop')
+                    );
                     break;
                 case config('attribute_product.rating_desc'):
-                    $ratingDesc = Rating::select('product_id',
-                        DB::raw('AVG(rating) as rating_avg'))
-                        ->groupBy('product_id')
-                        ->orderBy('rating_avg', 'DESC')
-                        ->get();
+                    $ratingDesc = $this->ratingRepo
+                        ->getProductByRatingDesc();
                     $ids = [];
 
                     foreach ($ratingDesc as $rating) {
                         $ids[] = $rating->product_id;
                     }
-                    $product_id = implode(',', $ids);
-                    $products = Product::whereIn('id', $ids)
-                        ->orderByRaw("FIELD(id, $product_id)")
-                        ->paginate(config('paginates.pagination_shop'));
+                    $products = $this->productRepo->showProductByRatingFilter($ids);
                     break;
-                default:
-                    $products = Product::paginate(config('paginates.pagination_shop'));
             }
         }
         if ($request->filterBy) {
@@ -62,43 +86,46 @@ class ShoppingController extends Controller
             switch ($filterBy)
             {
                 case config('attribute_product.food.name'):
-                    $products = Product::where('category_id', config('attribute_product.food.id'))
-                        ->paginate(config('paginates.pagination_shop'));
+                    $products = $this->productRepo
+                        ->getProductByAttr('category_id', config('attribute_product.food.id'));
                     break;
                 case config('attribute_product.drink.name'):
-                    $products = Product::where('category_id', config('attribute_product.drink.id'))
-                        ->paginate(config('paginates.pagination_shop'));
+                    $products = $this->productRepo
+                        ->getProductByAttr('category_id', config('attribute_product.drink.id'));
                     break;
                 case config('attribute_product.size_s.name'):
-                    $products = Product::where('size_id', config('attribute_product.size_s.id'))
-                        ->paginate(config('paginates.pagination_shop'));
+                    $products = $this->productRepo
+                        ->getProductByAttr('size_id', config('attribute_product.size_s.id'));
                     break;
                 case config('attribute_product.size_m.name'):
-                    $products = Product::where('size_id', config('attribute_product.size_m.id'))
-                        ->paginate(config('paginates.pagination_shop'));
+                    $products = $this->productRepo
+                        ->getProductByAttr('size_id', config('attribute_product.size_m.id'));
                     break;
                 case config('attribute_product.size_l.name'):
-                    $products = Product::where('size_id', config('attribute_product.size_l.id'))
-                        ->paginate(config('paginates.pagination_shop'));
+                    $products = $this->productRepo
+                        ->getProductByAttr('size_id', config('attribute_product.size_l.id'));
                     break;
                 case config('attribute_product.size_xl.name'):
-                    $products = Product::where('size_id', config('attribute_product.size_xl.id'))
-                        ->paginate(config('paginates.pagination_shop'));
+                    $products = $this->productRepo
+                        ->getProductByAttr('size_id', config('attribute_product.size_xl.id'));
                     break;
             }
         }
-        $categories = Category::all();
-        $sizes = Size::all();
+        $categories = $this->categoryRepo->getAll();
+        $sizes = $this->sizeRepo->getAll();
 
         return view('client.shop', compact('products', 'categories', 'sizes'));
     }
 
     public function show($id)
     {
-        $products = Product::orderBy('created_at', 'DESC')->get();
-        $product = $products->find($id);
-        $ratings = Rating::where('product_id', $id)
-            ->orderBy('created_at', 'DESC')->get();
+        $products = $this->productRepo->showList(
+            'created_at',
+            'DESC',
+            config('paginates.pagination')
+        );
+        $product = $this->productRepo->getById($id);
+        $ratings = $this->ratingRepo->getRatingOfProduct($id);
         $countRate = $ratings->count();
 
         if ($countRate != config('numbers.zero')) {
