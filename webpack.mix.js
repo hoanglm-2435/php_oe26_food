@@ -18,3 +18,4 @@ mix.js('resources/js/confirm_delete.js', 'public/js')
     .js('resources/js/rating.js', 'public/js')
     .js('resources/js/order_status.js', 'public/js')
     .js('resources/js/order_infor.js', 'public/js')
+    .js('resources/js/chart.js', 'public/js');

@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{{ asset('bower_components/admin-lte/dist/css/adminlte.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('bower_components/sweetalert/docs/assets/css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/chart.js/dist/Chart.min.css') }}">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -134,5 +135,7 @@
 <script src="{{ asset('bower_components/sweetalert/docs/assets/sweetalert/sweetalert.min.js') }}"></script>
 <script src="{{ mix('js/suggest_status.js') }}"></script>
 <script src="{{ mix('js/order_status.js') }}"></script>
+<script src="{{ asset('bower_components/chart.js/dist/Chart.min.js') }}"></script>
+<script src="{{ mix('js/chart.js') }}"></script>
 </body>
 </html>

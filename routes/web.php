@@ -23,6 +23,8 @@ Route::group(['middleware' => 'locale'], function() {
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::get('dashboard', 'AdminController@index')->name('dashboard');
 
+    Route::get('get-chart', 'AdminController@getChart');
+
     Route::resource('users', 'UserController');
 
     Route::resource('categories', 'CategoryController');

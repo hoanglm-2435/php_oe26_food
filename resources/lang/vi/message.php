@@ -76,4 +76,26 @@ return [
     'pending' => 'Chờ xử lý',
     'delivered' => 'Đã giao hàng',
     'canceled' => 'Đã hủy',
+    'chart' => [
+        'statistical_tables' => 'Bảng thống kê',
+        'month' => [
+            "Thg 1",
+            "Thg 2",
+            "Thg 3",
+            "Thg 4",
+            "Thg 5",
+            "Thg 6",
+            "Thg 7",
+            "Thg 8",
+            "Thg 9",
+            "Thg 10",
+            "Thg 11",
+            "Thg 12"
+        ],
+        'label' => [
+            'revenue' => 'Doanh thu',
+            'number_of_orders' => 'Số lượng đơn hàng'
+        ],
+        'title' => 'THỐNG KÊ SỐ LƯỢNG ĐƠN HÀNG VÀ DOANH THU THEO THÁNG',
+    ],
 ];
