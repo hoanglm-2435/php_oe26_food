@@ -77,4 +77,26 @@ return [
     'pending' => 'Pending',
     'delivered' => 'Delivered',
     'canceled' => 'Canceled',
+    'chart' => [
+        'statistical_tables' => 'Statistical Tables',
+        'month' => [
+            'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
+            'May',
+            'Jun',
+            'Jul',
+            'Aug',
+            'Sep',
+            'Oct',
+            'Nov',
+            'Dec'
+        ],
+        'label' => [
+            'revenue' => 'Revenue',
+            'number_of_orders' => 'Number Of Orders'
+        ],
+        'title' => 'STATISTICS STATISTICS AND REVENUE BY MONTH',
+    ],
 ];
