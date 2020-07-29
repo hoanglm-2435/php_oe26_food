@@ -2,18 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\OrderItem\OrderItemRepositoryInterface;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
-    public function __construct()
+    protected $orderItemRepo;
+
+    public function __construct(OrderItemRepositoryInterface $orderItemRepo)
     {
+        $this->orderItemRepo = $orderItemRepo;
         $this->middleware('auth');
     }
 
     public function index()
     {
-        return view('admin.dashboard');
+        $notifications = Auth::user()->notifications();
+        $notifyUnread = $notifications
+            ->wherePivot('status', config('realtime_notify.status.notify_unread'))
+            ->count();
+        $getLimitNotify = Auth::user()->notifications
+            ->sortByDesc('created_at')
+            ->take(config('realtime_notify.show_notify'));
+
+        return view('admin.dashboard', compact(
+            'notifications',
+            'notifyUnread',
+            'getLimitNotify'
+        ));
     }
 
     public function getChart()
@@ -60,5 +78,38 @@ class AdminController extends Controller
         ];
 
         return response()->json($dataChart);
+    }
+
+    public function getNotification(Request $request)
+    {
+        $notifyId = $request->id;
+        $notifications = Auth::user()->notifications();
+        $notifications->updateExistingPivot(
+            $notifyId,
+            ['status' => config('realtime_notify.status.notify_read')]
+        );
+        $orderId = $request->order_id;
+        $orderItem = $this->orderItemRepo->getWhereEqual('order_id', $orderId);
+        $orderDetails = [];
+        $grandTotal = config('numbers.zero');
+
+        foreach ($orderItem as $id => $item) {
+            $orderDetails[] = [
+                'productName' => $item->product->name,
+                'productQuantity' => $item->quantity,
+                'productPrice' => $item->product->price_sale,
+                'totalPrice' => $item->total_price,
+            ];
+            $grandTotal += $item->total_price;
+        }
+        $notifyCount = $notifications
+            ->wherePivot('status', config('realtime_notify.status.notify_unread'))
+            ->count();
+
+        return response()->json([
+            'order_details' => $orderDetails,
+            'notify_count' => $notifyCount,
+            'grand_total' => $grandTotal
+        ]);
     }
 }

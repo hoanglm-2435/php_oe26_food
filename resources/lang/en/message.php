@@ -99,4 +99,7 @@ return [
         ],
         'title' => 'STATISTICS STATISTICS AND REVENUE BY MONTH',
     ],
+    'notification_alert' => 'You have new notification!',
+    'view_orders' => 'View Orders',
+    'empty_notify' => 'Empty notification!',
 ];

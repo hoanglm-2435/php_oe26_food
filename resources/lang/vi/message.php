@@ -98,4 +98,7 @@ return [
         ],
         'title' => 'THỐNG KÊ SỐ LƯỢNG ĐƠN HÀNG VÀ DOANH THU THEO THÁNG',
     ],
+    'notification_alert' => 'Bạn có thông báo mới!',
+    'empty_notify' => 'Không có thông báo',
+    'view_orders' => 'Xem đơn hàng'
 ];
