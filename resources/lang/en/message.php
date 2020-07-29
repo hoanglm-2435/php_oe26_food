@@ -102,4 +102,11 @@ return [
     'notification_alert' => 'You have new notification!',
     'view_orders' => 'View Orders',
     'empty_notify' => 'Empty notification!',
+    'mail' => [
+        'hello' => 'Hello',
+        'subject_mail' => 'Your order has been approved!',
+        'title' => 'Here is your order information, please check your order:',
+        'check_now' => 'Check Now',
+        'thanks' => 'Thank you for trusting our purchases,',
+    ],
 ];

@@ -100,5 +100,12 @@ return [
     ],
     'notification_alert' => 'Bạn có thông báo mới!',
     'empty_notify' => 'Không có thông báo',
-    'view_orders' => 'Xem đơn hàng'
+    'view_orders' => 'Xem đơn hàng',
+    'mail' => [
+        'hello' => 'Xin chào',
+        'subject_mail' => 'Đơn hàng của bạn đã được duyệt!',
+        'title' => 'Dưới đây là thông tin đơn hàng, hãy kiểm tra lại đơn hàng của bạn:',
+        'check_now' => 'Kiểm tra ngay',
+        'thanks' => 'Cảm ơn bạn đã tin tưởng mua hàng của chúng tôi,'
+    ],
 ];
