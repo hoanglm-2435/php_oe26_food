@@ -32,6 +32,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::resource('products', 'ProductController');
 
     Route::resource('orders', 'OrderController');
+
+    Route::put('show-notification', 'AdminController@getNotification');
 });
 
 //Client Route
