@@ -1,6 +1,8 @@
 $(document).ready(function () {
-    var pusher = new Pusher('19c24088f6b15c25ab96', {
+    Pusher.logToConsole = true;
+    var pusher = new Pusher('09863ffc18f773e8c993', {
         cluster: 'ap1',
+        forceTLS: true,
         encrypted: true
     });
     var user_id = $('#notify-message').data('user');

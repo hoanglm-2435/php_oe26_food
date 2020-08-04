@@ -111,4 +111,5 @@ return [
         'promotions_content' => 'Chúng tôi đang có chương trình khuyến mãi hằng tuần, hãy tới mua sắm nào!',
         'shop_now' => 'Mua sắm ngay'
     ],
+    'title_notify' => 'Bạn có đơn hàng mới từ ',
 ];

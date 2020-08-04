@@ -34,7 +34,7 @@ return [
     'all' => 'Tất cả',
     'food' => 'Đồ ăn',
     'drink' => 'Đồ uống',
-    'add_to_cart' => 'Thêm vào giỏ hàng',
+    'add_to_cart' => 'Thêm vào giỏ',
     'like' => 'Yêu thích',
     'title_banner' => 'Đã đến lúc bắt đầu rồi',
     'description_banner' => 'Sự hài lòng của bạn đem đến thành công cho chúng tôi',

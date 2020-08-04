@@ -70,7 +70,7 @@ class CheckoutController extends Controller
             $request->session()->forget('cart');
             $request->session()->forget('totalPrice');
             $notify['order_id'] = $order->id;
-            $notify['user'] = $user->email;
+            $notify['user'] = $user->name;
             $notification = $this->notiRepo->create([
                 'user_id' => $user->id,
                 'notification' => json_encode($notify)
@@ -78,7 +78,8 @@ class CheckoutController extends Controller
             $notify['notify_id'] = $notification->id;
             $options = array(
                 'cluster' => env('PUSHER_APP_CLUSTER'),
-                'encrypted' => true
+                'encrypted' => true,
+                'useTLS' => true,
             );
             $pusher = new Pusher(
                 env('PUSHER_APP_KEY'),

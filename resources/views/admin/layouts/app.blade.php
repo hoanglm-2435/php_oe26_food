@@ -42,7 +42,7 @@
                 <a class="nav-link" data-toggle="dropdown" href="#">
                     <i class="far fa-bell"></i>
                     @if (isset($notifyUnread))
-                        <span class="badge badge-warning navbar-badge count-notify">
+                        <span class="badge badge-danger navbar-badge count-notify">
                             {{ $notifyUnread }}
                         </span>
                     @endif
@@ -55,13 +55,19 @@
                         <div id="notify">
                             @foreach ($getLimitNotify as $notification)
                                 <div class="dropdown-divider"></div>
-                                <a href="#" class="show-order dropdown-item{{ $notification->pivot->status ? '' : ' bg-light' }}"
-                                    data-toggle="modal" data-target="#notiModal"
-                                    data-id="{{ $notification->id }}"
-                                    data-order="{{ json_decode($notification->notification)->order_id }}">
-                                    <i class="fas fa-envelope{{ $notification->pivot->status ? '-open' : ' text-danger' }} mr-2"></i>
-                                    {{ json_decode($notification->notification)->user }}
-                                </a>
+                                <div>
+                                    <a href="#" class="show-order dropdown-item{{ $notification->pivot->status ? '' : ' bg-light' }}"
+                                        data-toggle="modal" data-target="#notiModal"
+                                        data-id="{{ $notification->id }}"
+                                        data-order="{{ json_decode($notification->notification)->order_id }}">
+                                        <i class="fas fa-envelope{{ $notification->pivot->status ? '-open' : ' text-danger' }} mr-2"></i>
+                                        {{ trans('message.title_notify') }}
+                                        {{ json_decode($notification->notification)->user }}
+                                    </a>
+                                    <span id="time-notify">
+                                        {{ trans('message.created_at') . ' ' . $notification->created_at->translatedFormat('h:i A, d-m-Y') }}
+                                    </span>
+                                </div>
                             @endforeach
                         </div>
                     @else

@@ -112,4 +112,5 @@ return [
         'promotions_content' => 'We have weekly promotions, let\'s go shopping!',
         'shop_now' => 'Shop Now'
     ],
+    'title_notify' => 'You have new orders from ',
 ];
