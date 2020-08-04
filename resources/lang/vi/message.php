@@ -106,6 +106,9 @@ return [
         'subject_mail' => 'Đơn hàng của bạn đã được duyệt!',
         'title' => 'Dưới đây là thông tin đơn hàng, hãy kiểm tra lại đơn hàng của bạn:',
         'check_now' => 'Kiểm tra ngay',
-        'thanks' => 'Cảm ơn bạn đã tin tưởng mua hàng của chúng tôi,'
+        'thanks' => 'Cảm ơn bạn đã tin tưởng mua hàng của chúng tôi,',
+        'promotions_subject' => 'Chương trình khuyến mãi hàng tuần của Fudink!',
+        'promotions_content' => 'Chúng tôi đang có chương trình khuyến mãi hằng tuần, hãy tới mua sắm nào!',
+        'shop_now' => 'Mua sắm ngay'
     ],
 ];

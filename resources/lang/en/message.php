@@ -108,5 +108,8 @@ return [
         'title' => 'Here is your order information, please check your order:',
         'check_now' => 'Check Now',
         'thanks' => 'Thank you for trusting our purchases,',
+        'promotions_subject' => 'Fudink\'s weekly promotions!',
+        'promotions_content' => 'We have weekly promotions, let\'s go shopping!',
+        'shop_now' => 'Shop Now'
     ],
 ];
