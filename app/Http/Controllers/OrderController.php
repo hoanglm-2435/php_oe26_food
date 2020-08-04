@@ -2,21 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ConfirmOrder;
 use App\Repositories\Order\OrderRepositoryInterface;
 use App\Repositories\OrderItem\OrderItemRepositoryInterface;
+use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
     protected $orderRepo;
     protected $orderItemRepo;
+    protected $userRepo;
 
     public function __construct(
         OrderRepositoryInterface $orderRepo,
-        OrderItemRepositoryInterface $orderItemRepo
+        OrderItemRepositoryInterface $orderItemRepo,
+        UserRepositoryInterface $userRepo
     ) {
         $this->orderRepo = $orderRepo;
         $this->orderItemRepo = $orderItemRepo;
+        $this->userRepo = $userRepo;
     }
 
     public function index()
@@ -55,10 +62,14 @@ class OrderController extends Controller
     public function update(Request $request, $id)
     {
         $order = $this->orderRepo->getById($id);
+        $user = $this->userRepo->getById($order->user_id);
+        $admin = Auth::user();
+        $orderDetails = $this->showDetails($order->id)->getData();
 
         if ($request->all()) {
             if ($order->status == config('status.pending')) {
                 $this->orderRepo->update($id, ['status' => config('status.approved')]);
+                Mail::to($user->email)->queue(new ConfirmOrder($user, $admin, $orderDetails));
 
                 return true;
             } elseif ($order->status == config('status.approved')) {
