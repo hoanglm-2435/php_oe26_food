@@ -46,7 +46,7 @@ Route::resource('cart', 'CartController');
 
 Route::post('add-cart/{id}', 'CartController@addCart')->name('add_cart');
 
-Route::post('shopping/add-cart/{id}', 'CartController@addCart')->name('add_cart');
+Route::post('shopping/add-cart/{id}', 'CartController@addCart');
 
 Route::put('cart/cart/{id}', 'CartController@update');
 
@@ -57,7 +57,7 @@ Route::get('/favourites', 'FavouriteController@index')->name('favourites');
 
 Route::post('add-to-favourites/{id}', 'FavouriteController@addToFavourites')->name('add_to_favourites');
 
-Route::post('shopping/add-to-favourites/{id}', 'FavouriteController@addToFavourites')->name('add_to_favourites');
+Route::post('shopping/add-to-favourites/{id}', 'FavouriteController@addToFavourites');
 
 Route::put('favourites/{id}', 'FavouriteController@update');
 

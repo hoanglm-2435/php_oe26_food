@@ -33,6 +33,19 @@ class OrderController extends Controller
             'DESC',
             config('paginates.pagination')
         );
+        $notifications = Auth::user()->notifications();
+        $notifyUnread = $notifications
+            ->wherePivot('status', config('realtime_notify.status.notify_unread'))
+            ->get();
+        $notifyId = [];
+
+        foreach ($notifyUnread as $notify) {
+            $notifyId[] = $notify->id;
+        }
+        $notifications->updateExistingPivot(
+            $notifyId,
+            ['status' => config('realtime_notify.status.notify_read')]
+        );
 
         return view('admin.order_management.show_order', compact('orders'));
     }
